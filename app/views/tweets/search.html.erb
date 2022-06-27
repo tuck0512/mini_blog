@@ -1,0 +1,19 @@
+<div class="contents">
+    <%= form_with(url: search_tweets_path, local: true, method: :get, class: "form-search") do |form| %>
+            <%= form.text_field :keyword, placeholder: "投稿を検索する", class: "text-search" %>
+            <%= form.submit "SEND", class: "submit-search" %>
+    <% end %>
+    <% @tweets.each do |tweet| %>
+        <div class="tweet">
+            <%= link_to "#{tweet.user.nickname}", user_path(tweet.user_id), class: "tweet-name" %>
+            <p><%= tweet.text %></p>
+            <div class="btn-parent">
+                <%= link_to "SHOW", tweet_path(tweet.id), class: "btn" %>
+                <% if user_signed_in? && current_user.id == tweet.user_id %>
+                    <%= link_to "EDIT", edit_tweet_path(tweet.id), class: "btn" %>
+                    <%= link_to "DESTROY", tweet_path(tweet.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn" %>
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+</div>

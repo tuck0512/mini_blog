@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MiniBlog4</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header>
+      <div class="header">
+        <h2><a href="/">Blog</a></h2>
+        <% if user_signed_in? %>
+          <ul>
+            <li class="pull-down"><%= current_user.nickname %> ▼
+              <ul>
+                <li><%= link_to "MyPage", user_path(current_user.id) %></li>
+                <li><%= link_to "SignOut", destroy_user_session_path, method: :delete %></li>
+              </ul>
+            </li>
+            <li class="nav-bar"><%= link_to "New", new_tweet_path %></li>
+          </ul>
+        <% else %>
+          <ul>
+            <li class="nav-bar"><%= link_to "SignIn", new_user_session_path %></li>
+            <li class="nav-bar"><%= link_to "SignUp", new_user_registration_path %></li>
+          </ul>
+        <% end %>
+        </ul>
+      </div>
+    </header>
+    <%= yield %>
+  </body>
+</html>

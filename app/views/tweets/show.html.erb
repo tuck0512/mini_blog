@@ -1,0 +1,29 @@
+<div class="contents">
+    <div class="tweet">
+        <%= link_to "#{@tweet.user.nickname}", user_path(@tweet.user_id), class: "tweet-name" %>
+        <p><%= @tweet.text %></p>
+        <div class="btn-parent">
+            <%= link_to "TOP", root_path, class: "btn" %>
+            <% if user_signed_in? && current_user.id == @tweet.user_id %>
+                <%= link_to "EDIT", edit_tweet_path(@tweet.id), class: "btn" %>
+                <%= link_to "DESTROY", tweet_path(@tweet.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn" %>
+            <% end %>
+        </div>
+    </div>
+    <% if user_signed_in? %>
+        <%= form_with(model: [@tweet, @comment], local: true, class: "form-comment") do |form| %>
+            <%= form.text_area :text, placeholder: "コメントする", rows: "2", class: "text-comment" %>
+            <%= form.submit "SEND", class: "submit-comment" %>
+        <% end %>
+    <% else %>
+        <div><span style="color:red;">コメントの登録には新規登録が必要です</span><div>
+    <% end %>
+    <h2>＜コメント一覧＞</h2>
+    <% if @comments %>
+        <% @comments.each do |comment| %>
+            <p>
+                <%= link_to "#{comment.user.nickname}", user_path(comment.user_id), class: "comment-color" %>：<%= comment.text %>
+            </p>
+        <% end %>
+    <% end %>
+</div>

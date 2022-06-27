@@ -1,0 +1,16 @@
+<div class="contents">
+    <h2><%= @nickname %><span style="color:black;">さんの投稿一覧</span></h2><br/>
+    <% @tweets.each do |tweet| %>
+        <div class="tweet">
+            <%= link_to "#{tweet.user.nickname}", user_path(tweet.user_id), class: "tweet-name" %>
+            <p><%= tweet.text %></p>
+            <div class="btn-parent">
+                <%= link_to "SHOW", tweet_path(tweet.id), class: "btn" %>
+                <% if user_signed_in? && current_user.id == tweet.user_id %>
+                    <%= link_to "EDIT", edit_tweet_path(tweet.id), class: "btn" %>
+                    <%= link_to "DESTROY", tweet_path(tweet.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn" %>
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+</div>

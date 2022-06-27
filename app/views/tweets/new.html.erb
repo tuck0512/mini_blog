@@ -1,0 +1,7 @@
+<div class="contents">
+    <div><span style="color:#CCCCCC">本文</span></div>
+    <%= form_with(model: @tweet, local: true) do |form| %>
+        <%= form.text_area :text, rows: "3", class: "text-new" %>
+        <%= form.submit "SEND", class: "submit-new" %>
+    <% end %>
+</div>
